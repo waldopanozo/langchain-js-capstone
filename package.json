@@ -10,7 +10,8 @@
     "docker:up": "docker compose up -d ollama",
     "docker:down": "docker compose down",
     "docker:demo": "sh scripts/docker-demo.sh",
-    "docker:build": "docker compose --profile run build app"
+    "docker:build": "docker compose --profile run build app",
+    "docs:pdf": "sh scripts/generate-pdf.sh"
   },
   "engines": {
     "node": ">=20"

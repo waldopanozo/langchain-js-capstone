@@ -1,5 +1,9 @@
 # Technical Design — PR Description RAG (Capstone JS)
 
+> **Full document (5–8 pages):** [TDD.md](TDD.md) · **PDF for Moodle:** [TDD-PR-Description-RAG.pdf](TDD-PR-Description-RAG.pdf)
+
+This file is a short architecture summary. The PDF/Markdown TDD includes problem definition, ROI, test evidence, trade-offs, and rubric mapping.
+
 ## 1. Problem statement
 
 **Pain:** Reviewers need context linking Jira acceptance criteria to actual code changes. Authors often ship thin PR descriptions under time pressure.
