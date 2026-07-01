@@ -3,7 +3,7 @@
 RAG-based assistant that drafts **pull request descriptions** from a Jira-style ticket and a git diff.
 
 **Course:** AssureSoft Moodle — *Strategic Blueprint: From Prototype to Production-Ready LLM Features*  
-**Deliverables:** [Technical Design PDF](docs/TDD-PR-Description-RAG.pdf) · [Full TDD (Markdown)](docs/TDD.md) · [Test evidence](evidence/)
+**Deliverables:** [Technical Design PDF](docs/TDD-PR-Description-RAG.pdf) · [Full TDD (Markdown)](docs/TDD.md) · [Test evidence](docs/TEST-EVIDENCE.md) · [Demo artifacts](evidence/)
 
 ---
 
@@ -215,7 +215,7 @@ OLLAMA_EMBEDDING_MODEL=nomic-embed-text
 | Technical Design Document (PDF 5–8 pages) | Ready | `docs/TDD-PR-Description-RAG.pdf` |
 | Repository / ZIP | Ready | This folder |
 | README with run instructions | Ready | `README.md` |
-| Evaluation evidence | Ready | `evidence/` |
+| Evaluation evidence | Ready | `evidence/` + [docs/TEST-EVIDENCE.md](docs/TEST-EVIDENCE.md) |
 | Upload | Pending | [Moodle Capstone](https://moodleop.assuresoft.com/mod/assign/view.php?id=10127) |
 
 ---
