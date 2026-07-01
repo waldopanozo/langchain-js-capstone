@@ -1,0 +1,7 @@
+PR Description RAG — demo run
+ticket: DEV-142
+
+Issue in v1: unstructured wall of text, easy to hallucinate file names.
+Fix in v2: Zod schema + lower temperature + explicit AC mapping + parent doc retrieval.
+
+LangSmith: set LANGCHAIN_TRACING_V2=true in .env for trace screenshots.

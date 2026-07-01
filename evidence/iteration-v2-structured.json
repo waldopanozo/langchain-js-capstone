@@ -1,0 +1,18 @@
+{
+  "title": "Add rate limiting to public booking API",
+  "summary": "Implement per-IP rate limits on POST /api/bookings and a clear 429 response with Retry-After.",
+  "changes": [
+    "- POST /api/bookings returns 429 when limit exceeded",
+    "- Limit is configurable via environment variable"
+  ],
+  "testPlan": [
+    "POST /api/bookings returns 429 when limit exceeded",
+    "Limit is configurable via environment variable"
+  ],
+  "risks": [
+    "Parent can spam the booking endpoint during peak registration. We need per-IP rate limits on POST /api/bookings and a clear 429 response with Retry-After."
+  ],
+  "ticketMapping": [
+    "{\"title\":\"DEV-142\",\"summary\":\"Add rate limiting to public booking API\",\"changes\":[\"- POST /api/bookings returns 429 when limit exceeded\",\"- Limit is configurable via environment variable\"]}"
+  ]
+}
