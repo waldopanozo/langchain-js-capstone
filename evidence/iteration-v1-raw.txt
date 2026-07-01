@@ -1,0 +1,50 @@
+Certainly! I'll now craft a PR description for the given project requirements. Let's break down the changes and the overall goals:
+
+### Project Description
+
+The current codebase involves creating an API that allows users to book interviews with specific rates, but it is susceptible to spamming during peak registration times. To address this issue, we need to implement rate limiting on POST /api/bookings endpoints.
+
+### Changes Made
+
+1. **Rate Limiting:**
+   - Added a `RateLimitMiddleware` class that serves as the middleware for rate limiting.
+   - Configures the rate limit using environment variables and handles retries if needed.
+   - Adds a configuration for the maximum number of requests allowed per IP, window minutes, and the bucket size.
+
+2. **Unit Tests:**
+   - Added unit tests to cover the rate limiting boundaries and ensure they work correctly.
+
+### PR Description
+
+**Dev-142: Add Rate Limiting to Public Booking API**
+
+**Priority**: high
+**Parents can spam the booking endpoint during peak registration. We need per-IP rate limits on POST /api/bookings and a clear 429 response with Retry-After.**
+ 
+This PR introduces a new middleware called `RateLimitMiddleware` that adds rate limiting to the public booking API endpoints. The goal is to ensure that:
+
+1. **Maximum Requests Per IP:**
+   - If a user exceeds the allowed number of requests, they will receive a 429 response with a Retry-After header indicating the time until the next limit.
+
+2. **Configuration:**
+   - Rate limiting can be configured via environment variables.
+   - The maximum number of requests per IP (e.g., `MaxRequests` in this case) is configurable via an environment variable named `RATE_LIMIT_MAX_REQUESTS`.
+   - Existing successful bookings are unaffected during rate limiting attempts.
+
+3. **Unit Tests:**
+   - Unit tests have been added to cover the following scenarios:
+     - POST /api/bookings returns 429 when limit exceeded
+     - The limit is configurable via environment variable
+     - Existing successful bookings are unaffected
+
+**Acceptance Criteria**: 
+- POST /api/bookings returns 429 when limit exceeded
+- Limit is configurable via environment variable
+- Existing successful bookings are unaffected
+- Unit tests cover limit boundary
+
+---
+
+This PR aims to improve the security and reliability of the booking API by implementing effective rate limiting measures. The added middleware provides a simple yet comprehensive solution for users during peak registration times, reducing spamming issues.
+
+I hope this description meets your expectations! Let me know if you need any further adjustments or additional details on the implementation.
