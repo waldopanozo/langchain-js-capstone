@@ -8,7 +8,8 @@
 | **Course** | Generative AI for Javascript Developers — LangChain, RAG |
 | **Assignment** | Strategic Blueprint: From Prototype to Production-Ready LLM Features |
 | **Date** | June 30, 2026 |
-| **Repository** | `portfolio/langchain-js-capstone` |
+| **Repository** | https://github.com/waldopanozo/langchain-js-capstone |
+| **Moodle submission** | https://moodleop.assuresoft.com/mod/assign/view.php?id=10127 |
 
 ---
 
@@ -88,6 +89,15 @@ Per Moodle rubric, the pipeline implements:
 
 **User → Embedding → Vector Store → LLM → Output Parser**
 
+```
+┌──────────┐    ┌────────────┐    ┌─────────────────┐    ┌─────────┐    ┌───────────────┐
+│   User   │───►│ Embedding  │───►│  Vector Store   │───►│   LLM   │───►│ Output Parser │
+│  (CLI)   │    │  (Ollama)  │    │ (child chunks)  │    │ (Ollama)│    │ (Zod / JSON)  │
+└──────────┘    └────────────┘    └─────────────────┘    └─────────┘    └───────────────┘
+                         ▲                                      │
+                         └──────── Parent Document Retrieval ───┘
+```
+
 - **User:** CLI passes ticket + diff paths
 - **Embedding:** `nomic-embed-text` (Ollama) or `text-embedding-3-small` (OpenAI)
 - **Vector Store:** `MemoryVectorStore` with child chunks
@@ -142,6 +152,18 @@ This is the "Pro Touch" required by the assignment brief.
 ### 4.3 Why not agentic tool-calling?
 
 The use case is **document-grounded summarization**, not multi-step external actions. A RAG pipeline is simpler, cheaper, and easier to defend in a TDD. Agents could be a phase-2 extension (e.g. fetch live Jira via API).
+
+### 4.5 Cloud model choice (assignment Phase 4)
+
+The brief asks why not `claude-3.5-sonnet` or `gpt-4o-mini`:
+
+| Option | Why not default for this capstone |
+|--------|-----------------------------------|
+| **claude-3.5-sonnet** | Higher cost; requires Anthropic API; overkill for a summarization prototype |
+| **gpt-4o-mini** | Supported via `LLM_PROVIDER=openai`; better JSON quality |
+| **qwen2.5:0.5b (chosen)** | Zero cost, runs offline in Docker, demonstrates architecture without billing |
+
+Production recommendation: route small diffs to local models; escalate large or high-risk PRs to `gpt-4o-mini` or Claude.
 
 ### 4.4 Structured output strategy
 
@@ -256,7 +278,8 @@ First v2 run failed with `ZodError` because the tiny model returned objects insi
 ## 9. How to reproduce
 
 ```bash
-cd portfolio/langchain-js-capstone
+git clone https://github.com/waldopanozo/langchain-js-capstone.git
+cd langchain-js-capstone
 npm run docker:demo
 ```
 
@@ -270,6 +293,18 @@ See `README.md` for full setup options (host Node + Docker Ollama, optional Open
 
 ---
 
-## 10. Conclusion
+## 10. Submission package (Moodle)
+
+| # | Deliverable | Location |
+|---|-------------|----------|
+| 1 | TDD PDF (this document) | `docs/TDD-PR-Description-RAG.pdf` |
+| 2 | Codebase + README | https://github.com/waldopanozo/langchain-js-capstone |
+| 3 | Iteration evidence | `evidence/` · https://moodleop.assuresoft.com/mod/assign/view.php?id=10127 |
+
+Full upload checklist: `docs/SUBMISSION.md` in the repository.
+
+---
+
+## 11. Conclusion
 
 PR Description RAG demonstrates architectural thinking beyond a single LLM API call: ingestion, embeddings, retrieval optimization, LCEL orchestration, structured output, and a Docker-based local deployment path. The iteration from v1 to v2 shows measurable quality improvement and honest limits of tiny on-device models—exactly the kind of engineering judgment the capstone assignment expects.

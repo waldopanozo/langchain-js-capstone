@@ -3,7 +3,8 @@
 RAG-based assistant that drafts **pull request descriptions** from a Jira-style ticket and a git diff.
 
 **Course:** AssureSoft Moodle — *Strategic Blueprint: From Prototype to Production-Ready LLM Features*  
-**Deliverables:** [Technical Design PDF](docs/TDD-PR-Description-RAG.pdf) · [Full TDD (Markdown)](docs/TDD.md) · [Test evidence](docs/TEST-EVIDENCE.md) · [Demo artifacts](evidence/)
+**Repository:** https://github.com/waldopanozo/langchain-js-capstone  
+**Deliverables:** [TDD PDF](docs/TDD-PR-Description-RAG.pdf) · [TDD Markdown](docs/TDD.md) · [Test evidence](docs/TEST-EVIDENCE.md) · [Moodle upload guide](docs/SUBMISSION.md)
 
 ---
 
@@ -212,11 +213,11 @@ OLLAMA_EMBEDDING_MODEL=nomic-embed-text
 
 | Item | Status | Location |
 |------|--------|----------|
-| Technical Design Document (PDF 5–8 pages) | Ready | `docs/TDD-PR-Description-RAG.pdf` |
-| Repository / ZIP | Ready | This folder |
+| Technical Design Document (PDF 5–8 pages) | Ready | [docs/TDD-PR-Description-RAG.pdf](docs/TDD-PR-Description-RAG.pdf) |
+| Repository | Ready | https://github.com/waldopanozo/langchain-js-capstone |
 | README with run instructions | Ready | `README.md` |
 | Evaluation evidence | Ready | `evidence/` + [docs/TEST-EVIDENCE.md](docs/TEST-EVIDENCE.md) |
-| Upload | Pending | [Moodle Capstone](https://moodleop.assuresoft.com/mod/assign/view.php?id=10127) |
+| Upload | **Pending** | [Moodle Capstone](https://moodleop.assuresoft.com/mod/assign/view.php?id=10127) — see [docs/SUBMISSION.md](docs/SUBMISSION.md) |
 
 ---
 
