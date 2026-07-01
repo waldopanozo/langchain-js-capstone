@@ -1,0 +1,14 @@
+{
+  "key": "DEV-142",
+  "title": "Add rate limiting to public booking API",
+  "type": "story",
+  "priority": "high",
+  "description": "Parents can spam the booking endpoint during peak registration. We need per-IP rate limits on POST /api/bookings and a clear 429 response with Retry-After.",
+  "acceptanceCriteria": [
+    "POST /api/bookings returns 429 when limit exceeded",
+    "Limit is configurable via environment variable",
+    "Existing successful bookings are unaffected",
+    "Unit tests cover limit boundary"
+  ],
+  "labels": ["backend", "security", "api"]
+}

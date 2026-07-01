@@ -1,0 +1,32 @@
+{
+  "name": "langchain-js-capstone",
+  "version": "1.0.0",
+  "description": "RAG-based PR description generator (LangChain JS capstone)",
+  "type": "module",
+  "scripts": {
+    "ingest": "tsx src/cli.ts ingest",
+    "generate": "tsx src/cli.ts generate",
+    "demo": "tsx src/cli.ts demo",
+    "docker:up": "docker compose up -d ollama",
+    "docker:down": "docker compose down",
+    "docker:demo": "sh scripts/docker-demo.sh",
+    "docker:build": "docker compose --profile run build app"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@langchain/core": "^0.3.42",
+    "@langchain/ollama": "^0.2.0",
+    "@langchain/openai": "^0.5.5",
+    "@langchain/textsplitters": "^0.1.0",
+    "dotenv": "^16.4.7",
+    "langchain": "^0.3.19",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2"
+  }
+}

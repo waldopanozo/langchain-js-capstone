@@ -1,0 +1,81 @@
+diff --git a/backend/InterviewScheduling.Api/Middleware/RateLimitMiddleware.cs b/backend/InterviewScheduling.Api/Middleware/RateLimitMiddleware.cs
+new file mode 100644
+index 0000000..a1b2c3d
+--- /dev/null
++++ b/backend/InterviewScheduling.Api/Middleware/RateLimitMiddleware.cs
+@@ -0,0 +1,48 @@
++using System.Collections.Concurrent;
++
++namespace InterviewScheduling.Api.Middleware;
++
++public sealed class RateLimitMiddleware
++{
++    private readonly RequestDelegate _next;
++    private readonly int _maxRequests;
++    private readonly TimeSpan _window;
++    private readonly ConcurrentDictionary<string, Queue<DateTime>> _buckets = new();
++
++    public RateLimitMiddleware(RequestDelegate next, IConfiguration config)
++    {
++        _next = next;
++        _maxRequests = config.GetValue("RateLimit:MaxRequests", 30);
++        _window = TimeSpan.FromMinutes(config.GetValue("RateLimit:WindowMinutes", 1));
++    }
++
++    public async Task InvokeAsync(HttpContext context)
++    {
++        if (!HttpMethods.IsPost(context.Request.Method) ||
++            !context.Request.Path.StartsWithSegments("/api/bookings"))
++        {
++            await _next(context);
++            return;
++        }
++
++        var key = context.Connection.RemoteIpAddress?.ToString() ?? "unknown";
++        var now = DateTime.UtcNow;
++        var queue = _buckets.GetOrAdd(key, _ => new Queue<DateTime>());
++
++        lock (queue)
++        {
++            while (queue.Count > 0 && now - queue.Peek() > _window)
++                queue.Dequeue();
++
++            if (queue.Count >= _maxRequests)
++            {
++                context.Response.StatusCode = StatusCodes.Status429TooManyRequests;
++                context.Response.Headers.RetryAfter = ((int)_window.TotalSeconds).ToString();
++                return;
++            }
++
++            queue.Enqueue(now);
++        }
++
++        await _next(context);
++    }
++}
+diff --git a/backend/InterviewScheduling.Api/Program.cs b/backend/InterviewScheduling.Api/Program.cs
+index 1111111..2222222
+--- a/backend/InterviewScheduling.Api/Program.cs
++++ b/backend/InterviewScheduling.Api/Program.cs
+@@ -12,6 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
+ builder.Services.AddControllers();
+ var app = builder.Build();
+ 
++app.UseMiddleware<RateLimitMiddleware>();
+ app.MapControllers();
+ app.Run();
+diff --git a/backend/InterviewScheduling.Api.Tests/RateLimitMiddlewareTests.cs b/backend/InterviewScheduling.Api.Tests/RateLimitMiddlewareTests.cs
+new file mode 100644
+index 0000000..d4e5f6a
+--- /dev/null
++++ b/backend/InterviewScheduling.Api.Tests/RateLimitMiddlewareTests.cs
+@@ -0,0 +1,35 @@
++public class RateLimitMiddlewareTests
++{
++    [Fact]
++    public async Task Returns429_WhenLimitExceeded()
++    {
++        // Arrange: send MaxRequests+1 POST /api/bookings from same IP
++        // Assert: last response is 429 with Retry-After header
++    }
++}
